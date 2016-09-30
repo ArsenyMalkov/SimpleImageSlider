@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,24 +24,6 @@ public class ImageSlider extends ViewPager {
 
     public ImageSlider(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-//        addOnPageChangeListener(new OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-
         mContext = context;
     }
 
@@ -58,18 +39,18 @@ public class ImageSlider extends ViewPager {
         }
 
         public Object instantiateItem(ViewGroup container, int position) {
-            LayoutInflater inflater = LayoutInflater.from(mContext);
-            View view = inflater.inflate(R.layout.view_image, container, false);
+//            LayoutInflater inflater = LayoutInflater.from(mContext);
+//            View view = inflater.inflate(R.layout.view_image, container, false);
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
+            ImageView imageView = new ImageView(mContext);
             Picasso.with(mContext)
                     .load(mImageUrlList.get(position))
                     .fit()
                     .centerCrop()
                     .into(imageView);
 
-            container.addView(view);
-            return view;
+            container.addView(imageView);
+            return imageView;
         }
 
         @Override
@@ -79,7 +60,7 @@ public class ImageSlider extends ViewPager {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
+            container.removeView((ImageView) object);
         }
     }
 
