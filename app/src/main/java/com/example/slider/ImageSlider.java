@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -47,34 +48,39 @@ public class ImageSlider extends ViewPager {
 
     public void setImageUrlList(List<String> imageUrlList) {
         mImageUrlList = imageUrlList;
+        setAdapter(new ImagePagerAdapter());
+    }
 
-        setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return mImageUrlList.size();
-            }
+    private class ImagePagerAdapter extends PagerAdapter {
+        @Override
+        public int getCount() {
+            return mImageUrlList.size();
+        }
 
-            public Object instantiateItem(ViewGroup container, int position) {
-                ImageView imageView = new ImageView(mContext);
-                Picasso.with(mContext)
-                        .load(mImageUrlList.get(position))
-                        .fit()
-                        .centerCrop()
-                        .into(imageView);
-                container.addView(imageView);
-                return imageView;
-            }
+        public Object instantiateItem(ViewGroup container, int position) {
+            LayoutInflater inflater = LayoutInflater.from(mContext);
+            View view = inflater.inflate(R.layout.view_image, container, false);
 
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return view == object;
-            }
+            ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
+            Picasso.with(mContext)
+                    .load(mImageUrlList.get(position))
+                    .fit()
+                    .centerCrop()
+                    .into(imageView);
 
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView((ImageView) object);
-            }
-        });
+            container.addView(view);
+            return view;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
     }
 
 }
