@@ -17,11 +17,6 @@ public class ImageSlider extends ViewPager {
     private Context mContext;
     private List<String> mImageUrlList;
 
-    public ImageSlider(Context context) {
-        super(context);
-        mContext = context;
-    }
-
     public ImageSlider(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -30,6 +25,10 @@ public class ImageSlider extends ViewPager {
     public void setImageUrlList(List<String> imageUrlList) {
         mImageUrlList = imageUrlList;
         setAdapter(new ImagePagerAdapter());
+    }
+
+    public List<String> getImageUrlList() {
+        return mImageUrlList;
     }
 
     private class ImagePagerAdapter extends PagerAdapter {
@@ -44,11 +43,6 @@ public class ImageSlider extends ViewPager {
                     .load(mImageUrlList.get(position))
                     .centerCrop()
                     .into(imageView);
-//            Picasso.with(mContext)
-//                    .load(mImageUrlList.get(position))
-//                    .fit()
-//                    .centerCrop()
-//                    .into(imageView);
 
             container.addView(imageView);
             return imageView;
