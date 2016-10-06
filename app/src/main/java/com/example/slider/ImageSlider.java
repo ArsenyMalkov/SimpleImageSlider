@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -39,15 +39,16 @@ public class ImageSlider extends ViewPager {
         }
 
         public Object instantiateItem(ViewGroup container, int position) {
-//            LayoutInflater inflater = LayoutInflater.from(mContext);
-//            View view = inflater.inflate(R.layout.view_image, container, false);
-
             ImageView imageView = new ImageView(mContext);
-            Picasso.with(mContext)
+            Glide.with(mContext)
                     .load(mImageUrlList.get(position))
-                    .fit()
                     .centerCrop()
                     .into(imageView);
+//            Picasso.with(mContext)
+//                    .load(mImageUrlList.get(position))
+//                    .fit()
+//                    .centerCrop()
+//                    .into(imageView);
 
             container.addView(imageView);
             return imageView;
